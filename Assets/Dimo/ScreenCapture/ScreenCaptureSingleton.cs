@@ -41,7 +41,7 @@ namespace Dimo
         }
 
         /// <summary>
-        /// Capture screen.
+        /// Capture screen Coroutine.
         /// </summary>
         /// <param name="startX"></param>
         /// <param name="startY"></param>
@@ -58,13 +58,18 @@ namespace Dimo
         }
 
         /// <summary>
-        /// Reserve capture screen.
+        /// Capture screen.
         /// </summary>
         public virtual void Capture()
         {
             Capture(0, 0, Screen.width, Screen.height);
         }
 
+        /// <summary>
+        /// Capture screen.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public virtual void Capture(int width, int height)
         {
             var x = (Screen.width - width) / 2;
@@ -73,7 +78,7 @@ namespace Dimo
         }
 
         /// <summary>
-        /// Reserve capture screen.
+        /// Capture screen.
         /// </summary>
         /// <param name="startX"></param>
         /// <param name="startY"></param>
@@ -100,18 +105,7 @@ namespace Dimo
         /// <param name="height"></param>
         public virtual void SaveTexture(Texture2D tex, int startX, int startY, int width, int height)
         {
-            Color[] colors = new Color[width * height];
-            for (var i = 0; i < width && i < tex.width; i++)
-            {
-                for (var j = 0; j < height && j < tex.height; j++)
-                {
-                    var x = startX + i;
-                    var y = startY + j;
-                    var pixelColor = tex.GetPixel(x, y);
-                    colors[x + y * width] = pixelColor;
-                }
-            }
-
+            Color[] colors = tex.GetPixels(startX, startY, width, height);
             var fileName = CreateFilePath();
             Texture2D saveTex = new Texture2D(width, height, TextureFormat.ARGB32, false);
             saveTex.SetPixels(colors);
