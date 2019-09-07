@@ -6,7 +6,7 @@ namespace Dimo.Examples
     {
         void Awake()
         {
-            ScreenCaptureSingleton.Instance.OnComplete = (fileName) => { Debug.Log($"Create {fileName}"); };
+            ScreenCaptureSingleton.Instance.OnComplete = (_, filePath) => { Debug.Log($"Created {filePath}"); };
         }
 
         public void PressCaptureScreen()

@@ -22,7 +22,7 @@ namespace Dimo
             }
         }
 
-        public Action<string> OnComplete = null;
+        public Action<Texture2D, string> OnComplete = null;
 
         public Func<string> CreateFilePath = null;
 
@@ -106,11 +106,11 @@ namespace Dimo
         public virtual void SaveTexture(Texture2D tex, int startX, int startY, int width, int height)
         {
             Color[] colors = tex.GetPixels(startX, startY, width, height);
-            var fileName = CreateFilePath();
+            var filePath = CreateFilePath();
             Texture2D saveTex = new Texture2D(width, height, TextureFormat.ARGB32, false);
             saveTex.SetPixels(colors);
-            File.WriteAllBytes(fileName, saveTex.EncodeToPNG());
-            OnComplete?.Invoke(fileName);
+            File.WriteAllBytes(filePath, saveTex.EncodeToPNG());
+            OnComplete?.Invoke(saveTex, filePath);
         }
     }
 }
